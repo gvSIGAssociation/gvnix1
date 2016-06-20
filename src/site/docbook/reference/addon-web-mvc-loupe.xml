@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter version="5.0" xml:id="addon-web-mvc-loupe" xml:lang="es"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:ns5="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
+         
+  <title xml:lang="es">Add-on Campos Lupa</title>
+  
+  <para xml:lang="es">Implementación de campos lupa en el proyecto gvNIX.</para>
+
+  <section xml:id="addon-web-mvc-loupe_descripcion">
+    <title xml:lang="es">Descripción</title>
+    
+    <para xml:lang="es">Este add-on permite utilizar componentes de tipo lupa en aplicaciones gvNIX.
+    Gracias a estos componentes, podemos buscar registros de forma sencilla de
+    campos relacionados sin tener que visualizar todos los datos en un desplegable.</para>
+
+    <para xml:lang="es">Al aplicar este add-on sobre un proyecto, en los formularios es posible seleccionar 
+    registros de campos 
+    relacionados de una entidad. Estos registros son mostrados en una lista dinámica según las coincidencias
+     de carácteres del texto introducido o en la lista completa de los registros de este campo. </para>
+
+    <para xml:lang="es">El addon permite configurar la representación de registros a mostrar , permitiendo
+    limitar el número máximo de registros, los campos campo por los que se buscará coincidencias,
+    los campos de la entidad relacionada que se mostrarán en cada resultado, filtros personalizados de búsqueda, etc.</para>
+
+  </section>
+  
+  <section xml:id="addon-web-mvc-loupe_instalacion">
+    <title xml:lang="es">Instalación del componente lupa</title>
+    
+    <para xml:lang="es">Para instalarlo, hay que utilizar el comando <link
+    linkend="apendice-comandos_addon-web-mvc-loupe_setup">web mvc
+    loupe setup</link>, el cual solo estará disponible después de instalar el 
+    <link linked="addon-web-mvc_jquery">add-on JQuery</link> y el 
+    <link linked="addon-web-mvc-datatables">add-on Datatables</link> en nuestro proyecto.
+    </para>
+  </section>
+  
+  <section xml:id="addon-web-mvc-loupe_set">
+    <title xml:lang="es">Permitiendo a una entidad utilizar el campo lupa</title>
+    
+    <para xml:lang="es">Una vez instalados todos los componentes, es necesario generar una 
+    serie de métodos para realizar las búsquedas y la visualización de los resultados. Para que el
+    controlador disponga de estos métodos, utilizaremos el comando <link
+    linkend="apendice-comandos_addon-web-mvc-loupe_set">web mvc
+    loupe set</link> sobre el controlador seleccionado.
+    </para>
+    
+  </section>
+  
+    <section xml:id="addon-web-mvc-loupe_field">
+    <title xml:lang="es">Utilizando componentes lupa</title>
+    
+    <para xml:lang="es">Ahora que el Controlador ya dispone de los métodos necesarios, ejecutaremos
+    el comando <link linkend="apendice-comandos_addon-web-mvc-loupe_field">web mvc
+    loupe field</link> sobre el field de la entidad a la que pertenece el controlador con los métodos
+    generados. 
+    Una vez ejecutado este comando, transformaremos el campo indicado a un campo de tipo lupa en la capa
+    web de nuestra aplicación.
+    </para>
+
+    <para xml:lang="es"><emphasis role="underline">Importante:</emphasis> El controlador de la entidad a 
+    la que referencia el campo también debe tener instalado 
+    <link linkend="addon-web-mvc-datatables">Datatables</link> con un modo de visualización de listado 
+    estándar para la correcta visualización del componente lupa. Si se desea 
+    <link linkend="addon-web-mvc-datatables_instalacion">instalar Datatables</link> con un modo no 
+    estándar (mode="show", por ejemplo), se puede crear un controlador adicional para la misma 
+    entidad con el modo estándar de Datatables y asignar el atributo "listPath" del campo lupa a la 
+    vista "list" de este segundo controlador. El atributo "listPath" se explica en la sección 
+    <link linkend="addon-web-mvc-loupe_configuración_lupa">Configuración del widget lupa.</link> 
+    </para>
+
+    </section>
+    
+  <section xml:id="addon-web-mvc-loupe_update">
+    <title xml:lang="es">Actualizando componentes lupa</title>
+    
+    <para xml:lang="es">Para mantener actualizados los componentes importados mediante el comando de
+    instalación, podemos ejecutar el comando <link linkend="apendice-comandos_addon-web-mvc-loupe_update">
+    web mvc loupe update tags</link>.
+    </para>
+    
+  </section>
+  
+  
+  <section xml:id="addon-web-mvc-loupe_apendice_comandos">
+    <title xml:lang="es">Apendice de comandos</title>
+    
+    <para xml:lang="es">Para ver con mas detalle el comando que proporciona el add-on
+    consultar la sección de <link linkend="apendice-comandos_addon-web-mvc-loupe">
+    comandos del add-on Lupa</link>.</para>
+  </section>
+
+  <section xml:id="addon-web-mvc-loupe_configuración_lupa">
+    <title xml:lang="es">Configuración del widget lupa</title>
+
+    <para xml:lang="es">Este addon permite mostrar el componente lupa en las diferentes <emphasis>jspx</emphasis>
+     mediante el fichero <filename>loupe.tagx</filename>,el cual es añadido al proyecto al instalar el addon.
+     Este fichero contiene una serie de propiedades para definir las opciones de configuración del componente, 
+     como por ejemplo <emphasis>max</emphasis>, que permite limitar el número de 
+    resultados a mostrar. Para obtener más información sobre estos parámetros consultar el fichero
+     <filename>WEB-INF/tags/loupefield/loupe.tagx</filename> donde estos parámetros incluyen una descripción en su definición.</para>
+
+     <para xml:lang="es"> Ejemplo: </para>
+     <programlisting>
+&lt;form:create id=&quot;fu_com_springsource_petclinic_domain_Pet&quot; 
+modelAttribute=&quot;pet&quot; path=&quot; /pets&quot;
+render=&quot;${empty dependencies}&quot; z=&quot;E4jWxGSZUphUG7qjB1vBKbchssY=&quot;&gt;
+  &lt;field:input field=&quot;name&quot; id=&quot;c_com_springsource_petclinic_domain_Pet_name&quot; min=&quot;1&quot; 
+required=&quot;true&quot; z=&quot;xqcX/Hnb52FNxML/Xqv1yGlbMUM=&quot;/&gt;
+  &lt;loupefield:loupe returnFields=&quot;telephone&quot; searchField=&quot;city&quot; hiddeUtilbox=&quot;false&quot; 
+modalWidth=&quot;400&quot; required=&quot;true&quot; baseFilter=&quot;city=Valencia&quot;additionalFields=&quot; 
+lastName,city&quot; max=&quot;4&quot; caption=&quot;firstName&quot; field=&quot;owner&quot; controllerPath=&quot;pets&quot; 
+id=&quot;c_com_springsource_petclinic_domain_Pet_owner&quot; listPath=&quot;owners/list&quot; mode=&quot;update&quot; 
+pkField=&quot;id&quot; z=&quot;user-managed&quot;/&gt;
+&lt;/form:create&gt;
+     </programlisting>
+
+    <itemizedlist>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">field</emphasis> debe ser el campo del objeto expuesto en el formulario que se quiere representar en el campo lupa.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">required</emphasis> indica si este campo es obligatorio (el valor por defecto es false).</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">listPath</emphasis> ruta a la vista de lista del controlador, utilizada para mostrar los registros en el diálogo modal de la lupa.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">controllerPath</emphasis> ruta relativa al controller de la entidad a la que pertenece la vista.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">pkField</emphasis> es el campo de la clave primaria de la entidad de referencia en el campo lupa. Se utiliza para realizar las búsquedas.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">caption</emphasis> campos de la entidad se mostrarán en el campo lupa cuando se elige un resultado. Deben estar separados por comas.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">additionalFields</emphasis> campos adicionales de la entidad por los que se buscarán coincidencias. Si no se especifica ninguno, se buscará por id.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">baseFilter</emphasis> filtros por defecto por los que se mostrarán resultados. En el ejemplo sólo se mostrarán owners cuya ciudad es valencia.</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">modalWidth</emphasis> anchura del diálogo modal, en píxeles (el valor por defecto es 800). </para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">hiddeUtilbox</emphasis> especifica si ocultar elementos con la clase utilbox (el valor por defecto es true).</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">searchField</emphasis> especifica el campo usado para buscar (en el filtro de diálogo) cuando el input pierde el foco (por defecto es el primer campo de caption).</para>
+      </listitem>
+      <listitem>
+        <para xml:lang="es"><emphasis role="bold">returnFields</emphasis> campos adicionales que devolverá la búsqueda de Ajax, pero por los que no se buscará. Deben estar separados por comas.</para>
+      </listitem>
+    </itemizedlist>
+
+   </section>
+</chapter>

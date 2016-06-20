@@ -1,0 +1,205 @@
+//Creating Petclinic project
+project --topLevelPackage com.springsource.petclinic --projectName petclinic
+
+// Persistence
+jpa setup --provider HIBERNATE --database HYPERSONIC_PERSISTENT
+
+// Enumerates
+enum type --class ~.reference.PetType
+enum constant --name Dog
+enum constant --name Cat
+enum constant --name Bird
+enum type --class ~.reference.Specialty
+enum constant --name Cardiology
+enum constant --name Dentistry
+enum constant --name Nutrition
+
+// Creating entitys and fields
+entity jpa --class ~.domain.Pet --sequenceName PET_SEQ
+entity jpa --class ~.domain.Visit --sequenceName VISIT_SEQ
+entity jpa --class ~.domain.AbstractPerson --abstract
+entity jpa --class ~.domain.Vet --extends ~.domain.AbstractPerson
+entity jpa --class ~.domain.Owner --extends ~.domain.AbstractPerson
+field string --fieldName firstName --sizeMin 3 --sizeMax 30 --class ~.domain.AbstractPerson
+field string --fieldName lastName --notNull --sizeMin 3 --sizeMax 30
+field string --fieldName address --notNull --sizeMax 50 --sizeMin 1
+field string --fieldName city --notNull --sizeMax 30
+field string --fieldName telephone --notNull
+field string --fieldName homePage --sizeMax 30
+field string --fieldName email --sizeMax 30 --sizeMin 6
+field date --fieldName birthDay --type java.util.Date --notNull
+field string --fieldName description --sizeMax 255 --class ~.domain.Visit
+field date --fieldName visitDate --type java.util.Date --notNull --past
+field reference --fieldName pet --type ~.domain.Pet --notNull
+field reference --fieldName vet --type ~.domain.Vet
+field boolean --fieldName sendReminders --notNull --primitive --class ~.domain.Pet
+field string --fieldName name --notNull --sizeMin 1
+field number --fieldName weight --type java.lang.Float --notNull --min 0
+field reference --fieldName owner --type ~.domain.Owner
+field enum --fieldName type --type ~.reference.PetType --notNull
+field date --fieldName employedSince --type java.util.Calendar --notNull --past --class ~.domain.Vet
+field enum --fieldName specialty --type ~.reference.Specialty --notNull false
+field set --class ~.domain.Owner --fieldName pets --type ~.domain.Pet --mappedBy owner --notNull false --cardinality ONE_TO_MANY
+field set --class ~.domain.Vet --fieldName visits --type ~.domain.Visit --mappedBy vet --notNull false --cardinality ONE_TO_MANY
+field reference --fieldName owner --type ~.domain.Owner --class ~.domain.Vet
+field set --fieldName vets --type ~.domain.Vet --class ~.domain.Owner --cardinality ONE_TO_MANY --mappedBy owner
+field set --fieldName visits --type ~.domain.Visit --class ~.domain.Pet --cardinality ONE_TO_MANY --mappedBy pet
+
+// Adding finders
+finder add --finderName findPetsByNameAndWeight --class ~.domain.Pet
+finder add --finderName findPetsByOwner
+finder add --finderName findPetsBySendRemindersAndWeightLessThan
+finder add --finderName findPetsByTypeAndNameLike
+finder add --finderName findVisitsByDescriptionAndVisitDate --class ~.domain.Visit
+finder add --finderName findVisitsByVisitDateBetween
+finder add --finderName findVisitsByDescriptionLike
+
+// Adding web layers
+web mvc setup
+web mvc all --package ~.web
+web mvc finder all
+web mvc language --code de
+web mvc language --code es
+
+// Enable gvNIX JPA utilities
+jpa gvnix setup
+
+// Creates a Spring @Service class with methods for entity batch updates
+jpa batch all
+
+// Enable gvNIX Web MVC Batch utilities
+web mvc batch setup
+
+// Add support for JPA batch operations in all controllers
+web mvc batch all
+
+// Adding JQuery, Datatables and Bootstrap
+web mvc jquery setup
+web mvc datatables setup
+web mvc jquery all
+web mvc bootstrap setup
+
+// Creating master patterns
+web mvc datatables add --type ~.web.VetController --mode show
+web mvc datatables add --type ~.web.PetController
+web mvc datatables add --type ~.web.OwnerController
+web mvc datatables add --type ~.web.VisitController --inline true --ajax true
+
+/////// At this point, the application is complete, and you can run
+// Pattern: master table Owner > detail table Pet
+web mvc datatables detail add --type ~.web.OwnerController --property pets
+// Pattern: master table Owner > detail table Vet
+web mvc datatables detail add --type ~.web.OwnerController --property vets
+// Pattern: master table Owner > detail table Pet > detail table Visit
+web mvc datatables detail add --type ~.web.PetController --property visits
+// Pattern: master table Owner > detail table Vet > detail table Visit
+web mvc datatables detail add --type ~.web.VetController --property visits
+
+// Setup menu
+menu setup
+
+// Adding Spring security
+security setup
+
+// Adding reports
+web report setup
+web report add --controller ~.web.OwnerController --reportName report_owners
+
+// Adding Optimistic Concurrency Control
+occ checksum set --entity ~.domain.Pet
+
+// Adding Tests
+test integration --entity ~.domain.Vet
+test integration --entity ~.domain.Owner
+test integration --entity ~.domain.Pet
+test integration --entity ~.domain.Visit
+selenium test --controller ~.web.OwnerController
+selenium test --controller ~.web.PetController
+selenium test --controller ~.web.VetController
+selenium test --controller ~.web.VisitController
+logging setup --level INFO
+
+// Dynamic Configuration
+configuration create --name local
+configuration property add --name log4j.rootLogger
+configuration property value --configuration local --property log4j.rootLogger --value ERROR
+configuration list
+configuration export
+
+// Adding Web Services
+remote service define ws --class ~.services.PetsServices --serviceName ws_get_all_pets
+remote service operation --name ws_list_pets --service ~.services.PetsServices
+
+// Modifying persistence to use POSTRGRES database with geo spatial support
+jpa setup --provider HIBERNATE --database POSTGRES --userName gvnix --databaseName postgis_example --password gvnix --hostName localhost
+
+// Adding spatial support to our project
+jpa geo setup --provider HIBERNATE_SPATIAL
+
+// Adding new geo fields to Owner entity
+field geo --fieldName location --type POINT --class ~.domain.Owner --srs 3857
+field geo --fieldName distance --type LINESTRING --class ~.domain.Owner --srs 3857
+field geo --fieldName area --type POLYGON --class ~.domain.Owner --srs 3857
+field geo --fieldName petLocation --type POINT --class ~.domain.Pet --srs 3857
+field geo --fieldName petArea --type POLYGON --class ~.domain.Pet --srs 3857
+
+// Install fancy tree
+web mvc fancytree setup
+
+// Creating different map views
+web mvc geo controller --class ~.web.MapViewerController --preferredMapping mapview
+web mvc geo controller --class ~.web.MapController --preferredMapping map
+
+// Modifying entity field to use Geo component
+web mvc geo field --controller ~.web.OwnerController --field location
+web mvc geo field --controller ~.web.OwnerController --field distance
+web mvc geo field --controller ~.web.OwnerController --field area
+web mvc geo field --controller ~.web.PetController --field petLocation
+web mvc geo field --controller ~.web.PetController --field petArea
+
+// Adding base layers for our geo fields in entity views
+web mvc geo base layer field --controller ~.web.OwnerController --field location --url "http://maptile.maps.svc.ovi.com/maptiler/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8" --type tile
+web mvc geo base layer field --controller ~.web.OwnerController --field distance --url "http://maptile.maps.svc.ovi.com/maptiler/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8" --type tile
+web mvc geo base layer field --controller ~.web.OwnerController --field area --url "http://maptile.maps.svc.ovi.com/maptiler/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8" --type tile
+web mvc geo base layer field --controller ~.web.PetController --field petLocation --url "http://maptile.maps.svc.ovi.com/maptiler/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8" --type tile
+web mvc geo base layer field --controller ~.web.PetController --field petArea --url "http://maptile.maps.svc.ovi.com/maptiler/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8" --type tile
+
+// Adding finders to some geo fields
+finder geo add --class ~.domain.Owner --field location
+finder geo add --class ~.domain.Owner --field area
+finder geo add --class ~.domain.Pet
+
+// Generating geo web layers for all entity fields
+// Without class param, get class from focus
+focus --class ~.web.MapViewerController
+web mvc geo entity add --controller ~.web.PetController
+
+// Generating geo web layer for one single entity field
+web mvc geo entity simple --controller ~.web.OwnerController --field location --pk id --class ~.web.MapViewerController
+
+// Creating layer groups for map views
+// With class param
+web mvc geo group --name world --label "World Maps" --labelCode  worldlabel --class ~.web.MapController
+web mvc geo group --name spain --label "Spain Maps" --labelCode spainglabel --class ~.web.MapController
+web mvc geo group --name regions --group spain --label Regions --labelCode regionslabel --class ~.web.MapController
+
+// Adding base layers to our map views, get class from focus
+focus --class ~.web.MapController
+web mvc geo wmslayer --name "Geological Valencia" --url "http://mapas.igme.es/gis/services/Cartografia_Geologica/IGME_GeologicoCValenciana_400/MapServer/WMSServer" --format "image/png" --transparent false --version "1.1.1" --crs EPSG4326 --layers "0,1,2,3" --group regions --opacity 0.5
+web mvc geo wmslayer --name "Badajoz" --url "http://mapas.igme.es/gis/services/Cartografia_Geologica/IGME_GeologicoBadajoz_200/MapServer/WMSServer" --format "image/png" --group regions --layers "0,1,2,3" --opacity 0.5 --version "1.3.0" --crs EPSG4326 --transparent false
+web mvc geo tilelayer --name satellit --url "http://maptile.maps.svc.ovi.com/maptiler/maptile/newest/satellite.day/{z}/{x}/{y}/256/png8" --group world --opacity 0.5
+
+// Adding tools to our maps views
+// With class param
+web mvc geo tool measure --name measure --class ~.web.MapController
+web mvc geo tool custom --name latlng --icon fa-location-arrow --activateFunction activateLatLngTool --deactivateFunction deactivateLatLngTool --iconLibrary fa --class ~.web.MapController
+
+// Adding overview into maps
+web mvc geo component overview --class ~.web.MapController
+web mvc geo component overview --class ~.web.MapViewerController
+
+// Updating tags, scripts and CSS
+web mvc geo update tags
+
+// Adding monitoring
+monitoring setup

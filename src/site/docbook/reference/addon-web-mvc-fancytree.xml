@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter version="5.0" xml:id="addon-web-mvc-fancytree" xml:lang="es"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:ns5="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
+         
+	<title xml:lang="es">Add-on Web MVC Fancytree</title>
+  
+  	<para xml:lang="es">Implementación de vistas tipo árbol en el proyecto gvNIX.</para>
+
+  	<section xml:id="addon-web-mvc-fancytree_descripcion">
+    	<title xml:lang="es">Descripción</title>
+    
+    <para xml:lang="es">Este add-on permite añadir componentes visuales de tipo "árbol" en las aplicaciones gvNIX. 
+    Con este componente podremos disponer de representaciones interactivas e intuitivas, fácilmente extensibles, personalizables y editables.</para>
+
+    <para xml:lang="es">Las principales características de este widget son:</para>
+
+      <variablelist>
+      <varlistentry>
+        <term xml:lang="es">Representación de datos</term>
+
+        <listitem>
+          <para xml:lang="es">Permite mostrar una estructura en forma de árbol con los datos introducidos o seleccionados
+        por el usuario. Esta estructura podrá contar con tantos niveles como se desee.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Edición de datos</term>
+
+        <listitem>
+          <para xml:lang="es">Se permite editar los datos mostrados en la representación a través del widget: Renombrar,  eliminar, crear nuevos hijos, etc.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Arrastrar y soltar (Drag and Drop)</term>
+
+        <listitem>
+          <para xml:lang="es">Además de editar los datos a través del árbol, se permite desplazarlos a un nuevo nivel o posición arrastrándolo con el ratón dentro de la estructura del árbol. Esta característica es personalizable, permitiendo añadirle opciones y restricciones.</para>
+        </listitem>
+      </varlistentry>
+
+        <varlistentry>
+        <term xml:lang="es">Cambiar apariencia</term>
+
+        <listitem>
+          <para xml:lang="es">Se permite cambiar la apariencia (skin) de la visualización, entre las siete diferentes que se instalarán en el proyecto o utilizar una apariencia personalizada.</para>
+        </listitem>
+      </varlistentry>
+
+       <varlistentry>
+        <term xml:lang="es">Personalización de componentes (botones, checkbox, menú contextual)</term>
+
+        <listitem>
+          <para xml:lang="es">El desarrollador puede añadir objetos como casillas de selección y botones HTML al componente árbol, e implementar las funciones de estos componentes como se desee.
+Además se permite añadir o modificar los elementos y sus funciones en el menú contextual para la edición del árbol.
+Estas y otras características de personalización del árbol se encuentran en el fichero WEB-INF/tags/fancytree/tree.tagx que se añade al proyecto al instalar el addon Fancytree.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+
+
+  </section>
+
+<section xml:id="addon-web-mvc-fancytree-instalacion">
+	<title xml:lang="es">Instalación del soporte para Fancytree </title>
+
+
+	<para xml:lang="es">Para instalar esta funcionalidad hay que utilizar el comando <link linkend="apendice-comandos_addon-web-mvc-fancytree_setup">web mvc fancytree setup</link>,el cual solo estará disponible después de instalar el 
+    <link linked="addon-web-mvc_jquery">add-on JQuery</link> en nuestro proyecto.
+    </para>
+
+      <para>Este comando añadirá los siguientes elementos:</para>
+
+    <orderedlist>
+      <listitem>
+        <para xml:lang="es">Las hojas de estilo necesarias para mostrar el componente visual, con siete skins diferentes. Estos ficheros se instalarán en <filename>webapp/styles/fancytree</filename></para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es"> Los archivos JavaScript de Fancytree y el plugin creado por el equipo de gvNIX para gestionar los datos que se muestran a través del Controller y  utilizar las funcionalidades disponibles (Personalización de componentes,  Drag and Drop, etc.)</para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es"><filename>Tagx</filename> necesarios utilizados en las páginas para el pintado y personalización del widgedt almacenados en <filename>WEB-INF/tags/fancytree</filename>.</para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es">Actualiza el fichero <filename>WEB-INF/tags/util/load-scripts.tagx</filename> para que las páginas puedan localizar los recursos de hojas de estilo y javaScript requeridos.</para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es">La dependencia a este add-on y librerías de utilidades utilizadas para el manejo y gestión de los datos.</para>
+      </listitem>
+    </orderedlist>
+  </section>
+
+
+  <section xml:id="addon-web-mvc-fancytree_add_show">
+  	<title xml:lang="es">Añadiendo plantilla para inserción de datos de un árbol</title>
+
+  	<para xml:lang="es">Para crear un menú de tipo árbol en un proyecto gvNIX, ejecutaremos el comando <link linkend="apendice-comandos_addon-web-mvc-fancytree_add_show">web mvc fancytree add show</link>, el cual añadirá al controller seleccionado la plantilla del método en el que se añadirán y servirán por petición <link href="https://es.wikipedia.org/wiki/AJAX">Ajax.</link> los datos y las propiedades del componente visual tipo árbol.
+  	</para>
+
+    <para xml:lang="es"> Ejemplo:</para>
+      <programlisting><![CDATA[
+        (treeUtils.isRootNode(id)){
+          List<TreeNode>  myTree  = new ArrayList<TreeNode>(); 
+          TreeNode node1  = new TreeNode(“Node1”, true);
+          node1.addChild(new TreeNode(“subnode1”));
+          node1.addChild(new TreeNode(“subnode2”));
+          node1.addChild(new TreeNode(“subnode3”));
+          myTree.add(node1);
+        }else{
+          Node node2  = new TreeNode(“Node2”);
+          myTree.add(node2);
+        }]]>
+    </programlisting>
+  </section>
+
+ <section xml:id="addon-web-mvc-fancytree_add_edit">
+  	<title xml:lang="es">Añadiendo plantilla para inserción y edición de datos de un árbol</title>
+  	
+  	<para xml:lang="es"> Para crear un menú de tipo árbol editable, ejecutaremos el comando <link linkend="apendice-comandos_addon-web-mvc-fancytree_add_edit">web mvc fancytree add edit</link>, el cual añadirña al controller seleccionado las plantillas de los métodos necesarios para añadir y mostrar datos, editarlos, eliminarlos o crear nuevos elementos.
+  	</para>
+
+    <para xml:lang="es"> Si se ha especificado el parámetro “page” en el comando, el desarrollador puede añadir propiedades a la página .jspx generada para añadir añadir botones y casillas de selección, activar o desactivar características, utilizar funciones o componentes personalizados, etc. </para>
+
+        <para xml:lang="es"> Ejemplo:</para>
+      <programlisting><![CDATA[
+        <fancytree:tree id="ps_com_springsource_petclinic_web_mytree" checkbox="true"
+       editable="true" path="/owners/mytree" allowDragAndDrop="true"
+        contextMenu="true" z="user-managed" />
+        ]]>
+      </programlisting>
+</section>
+
+<section xml:id="addon-web-mvc-fancytree_update_tags">
+	<title xml:lang="es">Actualizando componentes fancytree</title>
+
+	<para xml:lang="es">Para mantener actualizados los componentes importados mediante el comando de
+    instalación, podemos ejecutar el comando <link linkend="apendice-comandos_addon-web-mvc-fancytree_update_tags">
+    web mvc fancytree update tags</link>.
+    </para>
+    
+  </section>
+    
+  <section xml:id="addon-web-mvc-fancytree_apendice_comandos">
+    <title xml:lang="es">Apendice de comandos</title>
+    
+    <para xml:lang="es">Para ver con mas detalle el comando que proporciona el add-on
+    consultar la sección de <link linkend="apendice-comandos_addon-web-mvc-fancytree">
+    comandos del add-on Fancytree</link>.</para>
+  </section>
+
+</chapter>
+
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+  <gvnix>
+    <repositories>
+      <repository>
+        <id>gvNIX External Libraries repo</id>
+        <url>http://repository.gvnix.org</url>
+        <name>gvNIX External Libraries repo</name>
+      </repository>
+    </repositories>
+    <properties>
+      <gvnix.version>1.5.1.RC5</gvnix.version>
+    </properties>
+    <dependencies>
+       <dependency>
+        <groupId>org.gvnix</groupId>
+        <artifactId>org.gvnix.addon.fancytree.annotations</artifactId>
+        <version>${gvnix.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.gvnix</groupId>
+        <artifactId>org.gvnix.util.fancytree</artifactId>
+        <version>${gvnix.version}</version>
+        <type>jar</type>
+      </dependency>
+    </dependencies>
+  </gvnix>
+</configuration>

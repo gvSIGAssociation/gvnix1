@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section version="5.0" xml:id="apendice-comandos_addon-web-mvc-fancytree"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:ns5="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
+
+
+  <title xml:lang="es">Comandos del add-on WEB MVC fancytree View</title>
+
+  <para xml:lang="es">Para una descripción detallada de las características
+  del add-on consultar la documentación del<link linkend="addon-web-mvc-fancytree">
+  add-on fancytree</link>.</para>
+
+  <table>
+    <title xml:lang="es">Comandos de Add-on componentes visuales tipo Árbol</title>
+
+    <tgroup cols="2">
+      <colspec colwidth="145" />
+      <colspec colwidth="300" />
+      <thead>
+        <row>
+          <entry xml:lang="es" align="center">Comando</entry>
+
+          <entry xml:lang="es" align="center">Descripción</entry>
+        </row>
+      </thead>
+
+      <tbody>
+        <row>
+          <entry><link
+          linkend="apendice-comandos_addon-web-mvc-fancytree_setup">web mvc fancytree
+          setup</link></entry>
+
+          <entry xml:lang="es">Este comando importará a nuestro proyecto todos los recursos necesarios para 
+    	  utilizar el addon Fancytree.</entry>
+        </row>
+
+        <row>
+          <entry><link
+          linkend="apendice-comandos_addon-web-mvc-fancytree_update_tags">web mvc fancytree
+          update tags</link></entry>
+
+          <entry xml:lang="es">Este comando mantiene actualizados todos los componentes que se importan
+           al proyecto gvNIX al realizar la instalación del add-on</entry>
+        </row>
+
+        <row>
+          <entry><link
+          linkend="apendice-comandos_addon-web-mvc-fancytree_add_show">web mvc fancytree
+          add show</link></entry>
+
+          <entry xml:lang="es">Este comando nos permite añadir a una clase controller la plantilla de un método con la que añadir los datos y las propiedades de un árbol, y las servirá por petición <link href="https://es.wikipedia.org/wiki/AJAX">Ajax</link> para su carga y visualización.</entry>
+        </row>
+
+        <row>
+          <entry><link
+          linkend="apendice-comandos_addon-web-mvc-fancytree_add_edit">web mvc fancytree
+          add edit</link></entry>
+
+          <entry xml:lang="es">Este comando nos permite añadir a una clase controller las plantillas de métodos para gestionar la edición de un árbol mediante peticiones <link href="https://es.wikipedia.org/wiki/AJAX">Ajax</link>.</entry>
+        </row>
+
+
+      </tbody>
+    </tgroup>
+  </table>
+
+<section xml:id="apendice-comandos_addon-web-mvc-fancytree_setup">
+    <title>web mvc fancytree setup</title>
+
+    <para xml:lang="es">Este comando importará a nuestro proyecto todos los recursos necesarios para 
+    	  utilizar el addon Fancytree.</para>
+  </section>
+
+    <section xml:id="apendice-comandos_addon-web-mvc-fancytree_add_show">
+    <title>web mvc fancytree add show</title>
+
+    <para xml:lang="es">Este comando nos permite añadir a una clase controller la plantilla de un método con la que añadir los datos y las propiedades de un árbol, y las servirá por petición <link href="https://es.wikipedia.org/wiki/AJAX">Ajax</link> para su carga y visualización.</para>
+          
+       <para xml:lang="es">Sus parámetros son:
+          	<variablelist>
+		        <varlistentry>
+		          <term>--controller</term>
+		
+		          <listitem>
+		            <para xml:lang="es"><emphasis>[Requerido] [Cadena]</emphasis></para>
+		
+		            <para xml:lang="es">Nombre y ruta del Controlador sobre el cual queremos añadir el método para crear componente aŕbol. Si no se especifica se asumirá que es la clase actual (que tiene actualmente el foco).</para>
+		          </listitem>
+		        </varlistentry>
+
+		        <varlistentry>
+		          <term>--page</term>
+		
+		          <listitem>
+		            <para xml:lang="es"><emphasis>[Cadena]</emphasis></para>
+		
+		            <para xml:lang="es">Página adicional donde se mostrará el componente de árbol.</para>
+		          </listitem>
+		        </varlistentry>
+
+		        <varlistentry>
+		          <term>--mapping</term>
+		
+		          <listitem>
+		            <para xml:lang="es"><emphasis>[Cadena]</emphasis></para>
+		
+		            <para xml:lang="es">Ruta (URL) relativa al controller donde responderá el método. Si se omite será el valor de page (si ha sido especificado) o la ruta raíz del controller..</para>
+		          </listitem>
+		        </varlistentry>
+
+
+      		</variablelist>
+      </para>
+      
+  </section>
+
+
+      <section xml:id="apendice-comandos_addon-web-mvc-fancytree_add_edit">
+    <title>web mvc fancytree add edit</title>
+
+    <para xml:lang="es">Este comando nos permite añadir a una clase controller las plantillas de métodos para gestionar la edición de un árbol mediante peticiones <link href="https://es.wikipedia.org/wiki/AJAX">Ajax.</link></para>
+          
+       <para xml:lang="es">Sus parámetros son:
+          	<variablelist>
+		        <varlistentry>
+		          <term>--controller</term>
+		
+		          <listitem>
+		            <para xml:lang="es"><emphasis>[Requerido] [Cadena]</emphasis></para>
+		
+		            <para xml:lang="es">Nombre y ruta del Controlador sobre el cual queremos añadir el método para crear componente aŕbol. Si no se especifica se asumirá que es la clase actual (que tiene actualmente el foco).</para>
+		          </listitem>
+		        </varlistentry>
+
+		        <varlistentry>
+		          <term>--page</term>
+		
+		          <listitem>
+		            <para xml:lang="es"><emphasis>[Cadena]</emphasis></para>
+		
+		            <para xml:lang="es">Página adicional donde se mostrará el componente de árbol.</para>
+		          </listitem>
+		        </varlistentry>
+
+		        <varlistentry>
+		          <term>--mapping</term>
+		
+		          <listitem>
+		            <para xml:lang="es"><emphasis>[Cadena]</emphasis></para>
+		
+		            <para xml:lang="es">Ruta (URL) relativa al controller donde responderá el método. Si se omite será el valor de page (si ha sido especificado) o la ruta raíz del controller..</para>
+		          </listitem>
+		        </varlistentry>
+      		</variablelist>
+      </para>
+      
+  </section>
+
+  
+ <section xml:id="apendice-comandos_addon-web-mvc-fancytree_update_tags">
+    <title>web mvc fancytree update tags</title>
+
+    <para xml:lang="es">Este comando mantiene actualizados todos los componentes que se importan
+    al proyecto gvNIX al realizar la instalación del add-on.</para>
+  </section>
+  
+
+
+
+</section>
+

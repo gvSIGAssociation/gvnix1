@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+  <gvnix>
+    <repositories>
+      <repository>
+        <id>gvNIX External Libraries repo</id>
+        <url>http://repository.gvnix.org</url>
+        <name>gvNIX External Libraries repo</name>
+      </repository>
+    </repositories>
+    <properties>
+      <querydsl.version>3.6.9</querydsl.version>
+      <gvnix.version>1.5.1.RC5</gvnix.version>
+    </properties>
+    <dependencies>
+      <dependency>
+        <groupId>org.gvnix</groupId>
+        <artifactId>org.gvnix.addon.datatables.annotations</artifactId>
+        <version>${gvnix.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.gvnix</groupId>
+        <artifactId>org.gvnix.datatables.tags</artifactId>
+        <version>${gvnix.version}</version>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>org.gvnix</groupId>
+        <artifactId>org.gvnix.web.datatables</artifactId>
+        <version>${gvnix.version}</version>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>${querydsl.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.mysema.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <version>${querydsl.version}</version>
+      </dependency>
+       <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.1</version>
+      </dependency>
+    </dependencies>
+  </gvnix>
+</configuration>

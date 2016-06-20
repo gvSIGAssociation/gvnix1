@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <licenses>
+    <license>
+      <name>GNU General Public License (GPL), Version 3.0</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+      <distribution>repo</distribution>
+      <comments>
+      <![CDATA[
+      gvNIX is sponsored by the General Directorate for Information
+      Technologies (DGTI) of the Regional Ministry of Finance and Public
+      Administration of the Generalitat Valenciana (Valencian Community,
+      Spain), managed by gvSIG Association and led by DISID.
+
+      Copyright (C) 2010 DGTI - Generalitat Valenciana
+
+      This program is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+
+      You should have received a copy of the GNU General Public License
+      along with this program. If not, see <http://www.gnu.org/licenses />.
+      ]]>
+      </comments>
+    </license>
+  </licenses>
+  <parent>
+    <groupId>org.gvnix</groupId>
+    <artifactId>org.gvnix.addon.geo</artifactId>
+    <version>1.5.1.RC5</version>
+    <relativePath>../../addon-web-mvc-geo</relativePath>
+  </parent>
+  
+  <artifactId>org.gvnix.web.geo</artifactId>
+  <packaging>jar</packaging>
+  <name>gvNIX - Library - Dandelion-Geo Utils</name>
+  
+  <organization>
+    <name>
+    General Directorate for Information Technologies (DGTI) of
+    the Regional Ministry of Finance and Public Administration of the
+    Generalitat Valenciana.
+    </name>
+    <url>http://www.dgti.gva.es/</url>
+  </organization>
+  <description>Dandelion-DataTables utilities for Spring MVC based projects.</description>
+  <inceptionYear>2010</inceptionYear>
+  <url>http://www.gvnix.org</url>
+
+  <repositories>
+    <repository>
+      <id>gvNIX External Libraries repo</id>
+      <url>http://repository.gvnix.org</url>
+      <name>gvNIX External Libraries repo</name>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+    </dependency>
+    <!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
+      <version>${slf4j.version}</version> </dependency> -->
+    <!-- Hibernate jpa api -->
+    <dependency>
+      <groupId>org.hibernate.javax.persistence</groupId>
+      <artifactId>hibernate-jpa-2.1-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Querydsl -->
+    <dependency>
+      <groupId>com.mysema.querydsl</groupId>
+      <artifactId>querydsl-core</artifactId>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.mysema.querydsl</groupId>
+          <artifactId>querydsl-codegen</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mysema.querydsl</groupId>
+      <artifactId>querydsl-jpa</artifactId>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.mysema.querydsl</groupId>
+          <artifactId>querydsl-codegen</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>com.mysema.querydsl</groupId>
+      <artifactId>querydsl-spatial</artifactId>
+    </dependency>
+
+    <!-- gvNIX DataTables utils -->
+    <dependency>
+      <groupId>org.gvnix</groupId>
+      <artifactId>org.gvnix.web.datatables</artifactId>
+      <version>${gvnix.version}</version>
+    </dependency>
+
+
+    <!-- General dependencies for standard applications -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <!-- DiSiD: Add webdav extension to google code -->
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-webdav-jackrabbit</artifactId>
+        <version>2.3</version>
+      </extension>
+    </extensions>
+
+    <!-- DiSiD: Add build resources filtering -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/addon/*/configuration.xml</exclude>
+          <!-- JS plugins version -->
+          <exclude>**/addon/*/*.gvnix.*.js</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/addon/*/configuration.xml</include>
+          <!-- JS plugins version -->
+          <include>**/addon/*/*.gvnix.*.js</include>
+        </includes>
+      </resource>
+    </resources>
+
+  </build>
+
+  <!-- DiSiD: Add gvNIX version from parent pom and google code project name and 
+    repo folder values -->
+  <properties>
+    <gvnix.version>${project.parent.version}</gvnix.version>
+    <querydsl.version>3.6.9</querydsl.version>
+    <spring.version>3.2.0.RELEASE</spring.version>
+    <devel.resources.path>../../devel-resources</devel.resources.path>
+  </properties>
+
+</project>

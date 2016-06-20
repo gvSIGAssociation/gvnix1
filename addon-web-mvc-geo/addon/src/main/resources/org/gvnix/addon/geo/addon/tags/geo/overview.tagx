@@ -1,0 +1,32 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/jquery/util" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:layer="urn:jsptagdir:/WEB-INF/tags/geo/layers" version="2.0">
+  <jsp:output omit-xml-declaration="yes" />
+
+  <jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)" />
+  <jsp:directive.attribute name="aimingRectOptions" type="java.lang.String" required="false" description="JSON string with options to draw the aiming rectable on oviewMap" />
+  <jsp:directive.attribute name="shadowRectOptions" type="java.lang.String" required="false" description="JSON string with options to draw the shadow rectable on oviewMap" />
+  <jsp:directive.attribute name="toggleDisplay" type="java.lang.Boolean" required="false" description="Include a button to toggle overview display (Default true)" />
+  <jsp:directive.attribute name="autoToggleDisplay" type="java.lang.Boolean" required="false" description="Hidde the overview map its scale is no representative (Default true)" />
+  <jsp:directive.attribute name="width" type="java.lang.Integer" required="false" description="Width of overview component in px (Default 150)" />
+  <jsp:directive.attribute name="height" type="java.lang.Integer" required="false" description="Heigth of overview component in px (Default 150)" />
+  <jsp:directive.attribute name="zoomLevelOffset" type="java.lang.Integer" required="false" description="The offset applied to the zoom in the minimap compared to the zoom of the main map. Can be positive or negative, defaults to -5." />
+  <jsp:directive.attribute name="zoomLevelFixed" type="java.lang.Integer" required="false" description="Overrides the offset to apply a fixed zoom level to the minimap regardless of the main map zoom. Set it to any valid zoom level, if unset zoomLevelOffset is used instead." />
+  <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
+
+  <c:set var="mapview_in_overview" value="true" scope="request"/>
+  <c:set var="finalId" value="${id}_overview"/>
+  <div id="${finalId}" class="mapviewer_layers_overview" style="display:none;"
+      data-aiming_rect_options="${aimingRectOption}"
+      data-shadow_rect_options="${shadowRectOption}"
+      data-toggle_display="${toggleDisplay}"
+      data-auto_toggle_display="${autoToggleDisplay}"
+      data-width="${width}" data-height="${height}"
+      data-zoom_level_offset="${zoomLevelOffset}"
+      data-zoom_level_fixed="${zoomLevelFixed}"
+      >
+          <!-- Push new group name -->
+          <c:set value="${mapview_group_stack.push(finalId)}" var="nop"/>
+          <jsp:doBody />
+          <!-- Pop new group name -->
+          <c:set value="${mapview_group_stack.pop()}" var="nop"/>
+  </div>
+</jsp:root>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+  <gvnix>
+    <properties>
+      <gvnix.version>1.5.1.RC5</gvnix.version>
+    </properties>
+    <dependencies>
+      <dependency>
+        <groupId>org.gvnix</groupId>
+        <artifactId>org.gvnix.occ.roo.addon.annotations</artifactId>
+        <version>${gvnix.version}</version>
+        <type>jar</type>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </gvnix>
+</configuration>

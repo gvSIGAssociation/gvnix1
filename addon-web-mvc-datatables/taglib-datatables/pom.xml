@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <licenses>
+    <license>
+      <name>GNU General Public License (GPL), Version 3.0</name>
+      <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+      <distribution>repo</distribution>
+      <comments>
+      <![CDATA[
+      gvNIX is sponsored by the General Directorate for Information
+      Technologies (DGTI) of the Regional Ministry of Finance and Public
+      Administration of the Generalitat Valenciana (Valencian Community,
+      Spain), managed by gvSIG Association and led by DISID.
+
+      Copyright (C) 2010 DGTI - Generalitat Valenciana
+
+      This program is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+
+      You should have received a copy of the GNU General Public License
+      along with this program. If not, see <http://www.gnu.org/licenses />.
+      ]]>
+      </comments>
+    </license>
+  </licenses>
+  <parent>
+    <groupId>org.gvnix</groupId>
+    <artifactId>org.gvnix.addon.datatables</artifactId>
+    <version>1.5.1.RC5</version>
+    <relativePath>../../addon-web-mvc-datatables</relativePath>
+  </parent>
+  <artifactId>org.gvnix.datatables.tags</artifactId>
+  <name>gvNIX - Library - Datatables JSP Tag library</name>
+  <organization>
+    <name>
+    General Directorate for Information Technologies (DGTI) of
+    the Regional Ministry of Finance and Public Administration of the
+    Generalitat Valenciana.
+    </name>
+    <url>http://www.dgti.gva.es/</url>
+  </organization>
+  <description>JSP Tag lib which adaptes Dandelion datatables (http://dandelion.github.com/datatables) to work in gvNIX</description>
+  <inceptionYear>2010</inceptionYear>
+  <url>http://www.gvnix.org</url>
+
+  <repositories>
+	<repository>
+		<id>gvNIX External Libraries repo</id>
+		<url>http://repository.gvnix.org</url>
+		<name>gvNIX External Libraries repo</name>
+	</repository>
+  </repositories>
+
+  <dependencies>
+  		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+      </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>jstl-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <!-- DataTables -->
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-jsp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-servlet2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-export-itext</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-export-poi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dandelion</groupId>
+            <artifactId>datatables-export-poi-ooxml</artifactId>
+        </dependency>
+        <dependency>
+           <groupId>com.github.dandelion</groupId>
+           <artifactId>datatables-spring3</artifactId>
+        </dependency>
+        <!-- Enable json request -->
+        <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+        <!-- JPA API -->
+        <dependency>
+          <groupId>org.hibernate.javax.persistence</groupId>
+          <artifactId>hibernate-jpa-2.1-api</artifactId>
+          <scope>provided</scope>
+	      </dependency>
+        <!-- Joda time library (as uses in Roo projects to format dates) -->
+        <dependency>
+		  <groupId>joda-time</groupId>
+		  <artifactId>joda-time</artifactId>
+		  <version>1.6</version>
+        </dependency>
+        <!-- felxon -->
+        <dependency>
+            <groupId>net.sf.flexjson</groupId>
+            <artifactId>flexjson</artifactId>
+            <version>2.1</version>
+        </dependency>
+  </dependencies>
+  <build>
+
+  	<!-- DiSiD: Add build resources filtering -->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/META-INF/gvnix-table.tld</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/META-INF/gvnix-table.tld</include>
+        </includes>
+      </resource>
+    </resources>
+
+  	<pluginManagement>
+  		<plugins>
+  			<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+  			<plugin>
+  				<groupId>org.eclipse.m2e</groupId>
+  				<artifactId>lifecycle-mapping</artifactId>
+  				<version>1.0.0</version>
+  				<configuration>
+  					<lifecycleMappingMetadata>
+  						<pluginExecutions>
+  							<pluginExecution>
+  								<pluginExecutionFilter>
+  									<groupId>
+  										com.googlecode.maven-java-formatter-plugin
+  									</groupId>
+  									<artifactId>
+  										maven-java-formatter-plugin
+  									</artifactId>
+  									<versionRange>
+  										[0.4.0.e371sr1,)
+  									</versionRange>
+  									<goals>
+  										<goal>format</goal>
+  									</goals>
+  								</pluginExecutionFilter>
+  								<action>
+  									<ignore></ignore>
+  								</action>
+  							</pluginExecution>
+  						</pluginExecutions>
+  					</lifecycleMappingMetadata>
+  				</configuration>
+  			</plugin>
+  		</plugins>
+  	</pluginManagement>
+  </build>
+
+  <properties>
+    <jackson.version>1.9.12</jackson.version>
+	<devel.resources.path>../../devel-resources</devel.resources.path>
+  </properties>
+</project>
+

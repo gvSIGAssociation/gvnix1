@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter version="5.0" xml:id="addon-gva-security" xml:lang="es"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:ns5="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
+         
+  <title xml:lang="es">Add-on GVA Security</title>
+
+  <section xml:id="addon-gva-security_descripcion">
+    <title xml:lang="es">Descripción</title>
+
+    <para xml:lang="es">El add-on permite instalar clientes de autenticación y autorización
+    y lo integra con el sistema de seguridad Spring Security. Por defecto están configurados
+    los proveedores SAFE (acceso mediante usuario y contraseña y acceso mediante
+    certificado digital) y APLUSU (antiguo CIT security addon) pero se pueden añadir nuevos
+    proveedores implementando la interfaz SecurityProvider</para>
+
+    <para xml:lang="es">La documentación de este add-on se encuentra publicada en
+    el portal de información interno de la GVA <emphasis>confluence</emphasis></para>
+  
+  </section>
+</chapter>

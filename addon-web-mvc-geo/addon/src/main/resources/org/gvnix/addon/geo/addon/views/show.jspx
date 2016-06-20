@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:geo="urn:jsptagdir:/WEB-INF/tags/geo" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:layer="urn:jsptagdir:/WEB-INF/tags/geo/layers" xmlns:layer-toc="urn:jsptagdir:/WEB-INF/tags/geo/layers/toc" xmlns:layer-tool="urn:jsptagdir:/WEB-INF/tags/geo/layers/tools" xmlns:tool="urn:jsptagdir:/WEB-INF/tags/geo/tools" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+</div>

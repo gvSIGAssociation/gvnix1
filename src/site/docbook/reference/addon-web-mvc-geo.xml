@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter version="5.0" xml:id="addon-web-mvc-geo" xml:lang="es"
+         xmlns="http://docbook.org/ns/docbook"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:ns5="http://www.w3.org/1998/Math/MathML"
+         xmlns:ns4="http://www.w3.org/2000/svg"
+         xmlns:ns3="http://www.w3.org/1999/xhtml"
+         xmlns:ns="http://docbook.org/ns/docbook">
+  <title>Add-on Web MVC GEO</title>
+
+  <para>Uso del componente <link xlink:href="http://leafletjs.com/">Mapa</link> para representar y 
+  posicionar entidades que dispongan de campos de tipo GEO.</para>
+
+  <section xml:id="addon-web-mvc-geo_descripcion">
+    <title>Descripción</title>
+
+    <para xml:lang="es">Este Add-on permite representar en vistas de tipo <link xlink:href="http://leafletjs.com/">Mapa</link>, aquellas entidades
+    que dispongan de <link linkend="addon-jpa_geo">campos de tipo GEO.</link></para>
+
+    <para xml:lang="es">Las principales características de este widget son:</para>
+
+    <variablelist>
+      <varlistentry>
+        <term xml:lang="es">Representar entidades en Mapa</term>
+
+        <listitem>
+          <para xml:lang="es">Permite representar aquellas entidades que dispongan de campos de tipo GEO
+          en vistas de tipo Mapa. Se podrán mostrar/ocultar aquellos campos GEO que se deseen.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Filtrado de entidades</term>
+
+        <listitem>
+          <para xml:lang="es">Soporta filtrar los registros de una entidad representados en 
+          el mapa utilizando el componente <link linked="addon-web-mvc-datatables">Datatable</link>
+          Por defecto, esta característica se abre en una ventana diferente, el desarrollador puede 
+          configurarla para mostrarla como diálogo sobre la vista del mapa, o de forma distinta mediante
+          una función personalizada.
+           </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Selección de entidades</term>
+
+        <listitem>
+          <para xml:lang="es">Permite seleccionar uno o varios datos representados en la vista de 
+          Mapa utilizando el componente <link linked="addon-web-mvc-datatables">Datatable</link></para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Representar Capas Base en Mapa</term>
+
+        <listitem>
+          <para xml:lang="es">Además de representar entidades en la vista de Mapa, también es posible 
+          representar capas obtenidas desde un servidor de mapas. Es posible representar capas de tipo
+          "tile" y capas de tipo "WMS".</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Personalizar orden de capas</term>
+
+        <listitem>
+          <para xml:lang="es">El orden en el que se muestran las capas en el mapa se puede personalizar 
+            mediante la característica <link linked="ordenacion-de-capas">"Arrastrar y Soltar"</link>, que permite reordenar los
+            elementos de cada grupo de capas. De este modo, las capas se mostrarán en función de su ordenación
+            en el TOC, siendo la primera la que se muestre por encima de las demás.</para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term xml:lang="es">Barra de Herramientas</term>
+
+        <listitem>
+          <para xml:lang="es">Este componente dispone de una serie de herramientas que pueden ser
+          añadidas a la vista de mapa. También se pueden añadir herramientas estándar que el desarrollador
+          puede personalizar para que realicen las acciones que él desee.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term xml:lang="es">Personalización de componentes (Markers, Colores, etc...)</term>
+
+        <listitem>
+          <para xml:lang="es">Por defecto, la apariencia de las entidades que se representan en el mapa 
+          se generan de forma aleatoria. El desarrollador puede personalizar el icono, el color del icono,
+          el color del marker o linea, etc... Si la entidad tiene la opción de ser seleccionada desde
+          el componente <link linked="addon-web-mvc-datatables">Datatable</link> podrá configurar también,
+          la apariencia con la que se representará esta entidad al ser seleccionada.
+          De este mismo modo, se podrá configurar la apariencia de las herramientas genéricas.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </section>
+
+  <section xml:id="addon-web-mvc-geo_instalacion">
+    <title xml:lang="es">Instalación del soporte para vista de Mapa</title>
+
+
+    <para xml:lang="es">Esta funcionalidad depende de las librerías de <emphasis>jQuery</emphasis>
+    y el componente <emphasis>Fancytree</emphasis> por lo que, el primer paso,
+    será instalar estos recursos usando primero el comando <command><link
+    linkend="apendice-comandos_addon-web-mvc_mvc-jquery_web-mvc-jquery-setup">web
+    mvc jquery setup</link></command> y a continuación <command><link
+    linkend="apendice-comandos_addon-web-mvc_mvc-fancytree_web-mvc-fancytree-setup">web
+    mvc fancytree setup</link></command> si no estuviesen ya instalados.</para>
+
+
+    <para xml:lang="es">Una vez instalados los requisitos necesarios, para instalar esta 
+    funcionalidad hay que ejecutar el comando <command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-setup">web
+    mvc geo setup</link></command>.</para>
+
+    <para>Este comando añadirá los siguientes elementos:</para>
+
+    <orderedlist>
+      <listitem>
+        <para xml:lang="es">Imágenes y hojas de estilo utilizadas por el widget.
+        Estos ficheros se instalan en <filename>webapp/images</filename> y
+        <filename>webapp/styles/leaflet</filename> respectivamente.</para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es">Los archivos javaScript de leaflet (
+        tanto en su versión optimizada como estándar) y algunos plugins para leaflet, creados
+        por el equipo de gvNIX, para utilizados en las funcionalidades disponibles
+        (como selección, edición, etc...), en el directorio</para>
+        <filename>webapp/scripts/leaflet</filename>.
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es"><filename>Tagx</filename> necesarios utilizados en las páginas
+        para el pintado del widged, almacenados en
+        <filename>WEB-INF/tags/geo</filename>.</para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es">Actualiza el fichero <filename>WEB-INF/tags/util/load-scripts.tagx</filename>
+        para que las páginas puedan localizar los recursos de hojas de estilo y javaScript
+        requeridos.</para>
+      </listitem>
+
+      <listitem>
+        <para xml:lang="es">La dependencia a este add-on y librerías de
+        utilidades utilizadas para la gestión de peticiones de datos.</para>
+      </listitem>
+
+    </orderedlist>
+
+    <para xml:lang="es">Para más información sobre el comando ver
+    <command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-setup">web
+    mvc geo setup</link></command> en el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+  </section>
+
+  <section>
+    <title xml:lang="es">Generar vista de Mapa</title>
+
+    <para xml:lang="es">Para poder visualizar una vista de Mapa en nuestro proyecto,
+    es necesario ejecutar el comando <command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-controller">web mvc geo controller</link></command>.
+    </para>
+
+    <para xml:lang="es">Este comando genera un controlador anotado con <classname>@GvNIXMapViewer</classname>
+    que será el encargado de mostrar la vista del mapa que acabamos de crear. Además se podrá configurar
+    la proyección en la que trabaja el mapa generado.</para>
+
+    <para xml:lang="es">Además, genera la página <filename>show.jspx</filename> que será la encargada
+    de representar el mapa y todos sus componentes.</para>
+
+    <para xml:lang="es">Para mas información sobre los comandos ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+  </section>
+  
+   <section>
+    <title xml:lang="es">Generar campos de mapa en vistas CRU</title>
+    
+     <para xml:lang="es">Por defecto, a la hora de guardar campos de tipo geográfico se utilizará 
+     formato <link linkend="http://es.wikipedia.org/wiki/Well_Known_Text">WKT</link> que tendrá que ser
+     introducido de forma manual por el usuario.</para>
+    
+     <para xml:lang="es">Sin embargo, este add-on permite transformar estos campos de texto a componentes
+     de tipo Mapa, gracias a los cuales se facilita la introducción de datos de tipo GEO en una entidad.
+     Para utilizar estos tipos de campo, se ejecutará el comando <command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-field">web mvc geo field</link></command>.</para>
+    
+    <para xml:lang="es">Este comando modifica las vistas de <filename>create.jspx</filename>, 
+    <filename>update.jspx</filename> y <filename>show.jspx</filename> de la entidad sobre la que se
+    aplica cambiando los inputs de los campos seleccionados por componentes de tipo mapa.</para>
+    
+    <para xml:lang="es">Para mas información sobre los comandos ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+   </section>
+
+   <section>
+    <title xml:lang="es">Generar agrupaciones de capas sobre un mapa</title>
+    
+     <para xml:lang="es">Al generar capas es posible que se desee que se muestren agrupadas debido a un determinado requerimiento que establezca el usuario.</para>
+     
+     <para xml:lang="es">Para añadir una nueva agrupación a la vista de mapa y que posteriormente se agreguen capas a dicha agrupación, es posible ejecutar el siguiente comando:</para>
+    
+      <variablelist>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link 
+                  linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-group">web mvc geo group</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade una nueva agrupación de capas a la vista de mapa que se indique</para>
+	        </listitem>
+	      </varlistentry>
+
+      </variablelist>
+      
+    <para xml:lang="es">Este comando modifica la vista <filename>show.jspx</filename> del mapa
+    incluyendo el nuevo grupo a representar.</para>
+    
+    <para xml:lang="es">Para mas información sobre el comando ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+   </section>
+   
+   <section>
+    <title xml:lang="es">Añadir entidades a la vista de Mapa</title>
+    
+     <para xml:lang="es">Al generar la vista de mapa se generará una vista vacía con una capa base por 
+     defecto.</para>
+     
+     <para xml:lang="es">Para añadir nuevas entidades a la vista de mapa y que sean representadas sus
+     campos de tipo geográfico, es posible ejecutar los siguientes comandos:</para>
+    
+      <variablelist>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+	    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-entity-all">web mvc geo entity all</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade todas las entidades con campos de tipo GEO a la vista de mapa</para>
+	        </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-entity-add">web mvc geo entity add</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade la entidad seleccionada a la vista de mapa.</para>
+	        </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-entity-simple">web mvc geo entity simple</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade el campo de tipo GEO seleccionado de la entidad indicada a la vista de mapa.</para>
+	        </listitem>
+	      </varlistentry>
+
+        <varlistentry>
+          <term xml:lang="es"><command><link
+            linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-base-layer-field">web mvc geo base layer field</link></command></term>
+
+            <listitem>
+             <para xml:lang="es">Añade una capa base para mostrar en el mapa de un campo geográfico.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      
+    <para xml:lang="es">Estos comandos modifican los controladores de las entidades sobre los que se 
+    aplican añadiendo la anotación <classname>@GvNIXWebEntityMapLayer</classname>.</para>
+    
+    <para xml:lang="es">Al añadirse esta anotación, se añade en la vista <filename>show.jspx</filename> del mapa
+    la nueva entidad a representar.</para>
+    
+    <para xml:lang="es">Para mas información sobre los comandos ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+   </section>
+   
+  <section>
+    <title xml:lang="es">Añadir Capas Base la vista de Mapa</title>
+    
+     <para xml:lang="es">Al generar la vista de mapa se generará una vista vacía con una capa base por 
+     defecto.</para>
+     
+     <para xml:lang="es">Para añadir nuevas capas base, es posible ejecutar los siguientes comandos dependiendo
+     del tipo de Capa Base que queramos crear:</para>
+    
+      <variablelist>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-tilelayer">web mvc geo tilelayer</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade una capa base de tipo Tile a la vista del mapa</para>
+	        </listitem>
+	      </varlistentry>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-wmslayer">
+    web mvc geo wmslayer</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade una capa base de tipo WMS a la vista del mapa</para>
+	        </listitem>
+	      </varlistentry>
+
+	      <varlistentry>
+	        <term xml:lang="es"><command><link linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-wmtslayer">web mvc geo wmtslayer</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade una capa base de tipo WMTS a la vista del mapa</para>
+	        </listitem>
+	      </varlistentry>
+      </variablelist>
+      
+    <para xml:lang="es">Estos comandos añaden en la vista <filename>show.jspx</filename> del mapa
+    la nueva capa base</para>
+    
+    <para xml:lang="es">Para mas información sobre los comandos ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+   </section>
+   
+   <section>
+    <title xml:lang="es">Generar nuevas herramientas en la vista del Mapa</title>
+    
+     <para xml:lang="es">Por defecto, la vista de Mapa se genera con una única herramienta que permite
+     desplazarnos por el mapa.</para>
+    
+     <para xml:lang="es">Sin embargo, este add-on permite añadir nuevas herramientas a la vista de mapa
+     ejecutando los siguientes comandos :
+    <variablelist>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-tool-measure">web mvc geo tool measure</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade una herramienta de medición a la vista del mapa</para>
+	        </listitem>
+	      </varlistentry>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-tool-custom">web mvc geo tool custom</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade una herramienta personalizada a la vista del mapa</para>
+	        </listitem>
+	      </varlistentry>
+      </variablelist>
+      
+   	</para>
+          
+    <para xml:lang="es">Estos comandos añaden en la vista <filename>show.jspx</filename> del mapa
+    la nueva herramienta a utilizar.</para>
+    
+    <para xml:lang="es">Para mas información sobre los comandos ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+
+    <section>
+        <title xml:lang="es">Otras herramientas disponibles para añadir al Mapa</title>
+    
+        <para xml:lang="es">Existe la posibilidad de añadir una serie de herramientas al mapa diferentes a las mencionadas anteriormente. Para ello revisar el directorio <emphasis>WEB-INF/tags/geo/tools</emphasis> donde se encuentran los <emphasis>tagx</emphasis> correspondientes a dichas herramientas</para>
+
+     <para xml:lang="es">Para añadir una de estas herramientas, situarse en la vista <filename>show.jspx</filename> del mapa donde queremos introducir la herramienta e incluir una llamada al <emphasis>tagx</emphasis> correspondiente dentro de <emphasis>&lt;geo:toolbar&gt;</emphasis>, introduciendo aquellos parámetros que sean requeridos</para>
+     
+     <para xml:lang="es"> Ejemplo de inclusión de la herramienta impresión (<emphasis>print</emphasis>):</para>
+     <programlisting>
+&lt;geo:map id=&quot;ps_com_springsource_petclinic_web_Map&quot; projection=&quot;EPSG3857&quot; z=&quot;user-managed&quot;&gt;
+    ...   
+    &lt;geo:toc id=&quot;ps_com_springsource_petclinic_web_Map_toc&quot; z=&quot;user-managed&quot;&gt;
+        ...  
+    &lt;/geo:toc&gt;
+    ...
+    &lt;geo:toolbar id=&quot;ps_com_springsource_petclinic_web_Map_toolbar&quot; z=&quot;user-managed&quot;&gt;
+        &lt;tool:print id=&quot;ps_com_springsource_petclinic_web_Map_print&quot;/&gt;
+    &lt;/geo:toolbar&gt;
+    ...
+&lt;/geo:map&gt; 
+
+    </programlisting> 
+
+    <para xml:lang="es"> Para un correcto funcionamiento de la herramienta <emphasis>print</emphasis> se deben de activar las opciones de impresión que permiten imprimir las imágenes de fondo. Dichas opciones se encuentran disponibles en la ventana que se abre al seleccionar la herramienta, en Firefox situadas en la pestaña <emphasis>Opciones</emphasis>, mientras que en Chrome se encuentran situadas en el apartado <emphasis>Configuración</emphasis></para>
+
+    </section>
+
+ 	</section>
+
+    <section>
+    <title xml:lang="es">Añadir componente Mini Mapa en la vista del Mapa</title>
+       
+     <para xml:lang="es">Mediante el siguiente comando se permite añadir el componente mini mapa a la vista mapa que se seleccione, el cual, contedrá las mismas capas que se incluyan en el mapa general:
+    <variablelist>
+	      <varlistentry>
+	        <term xml:lang="es"><command><link
+    linkend="apendice-comandos_addon-web-mvc-geo_web-mvc-geo-component-overview">web mvc geo component overview</link></command></term>
+	
+	        <listitem>
+	          <para xml:lang="es">Añade el componente mini mapa a la vista de mapa.</para>
+	        </listitem>
+	      </varlistentry>
+      </variablelist>
+      
+   	</para>
+          
+    <para xml:lang="es">Este comando añade en la vista <filename>show.jspx</filename> del mapa
+    el <emphasis>tagx</emphasis> correspondiente al mini mapa. Dicho mini mapa facilita la navegación del mapa al que representa.</para>
+
+    <para xml:lang="es">Una vez ejecutado el comando se pueden editar las capas que se muestran en el mini mapa yendo a la página    <filename>show.jspx</filename> y eliminando o añadiendo capas al elemento <emphasis>geo:overview</emphasis></para>
+    
+    <para xml:lang="es">Para mas información sobre el comando ver el <link
+    linkend="apendice-comandos_addon-web-mvc-geo">apéndice de comandos de este
+    add-on</link>.</para>
+ 	</section>
+
+    <section>
+        <title xml:lang="es">Añadir Componentes Geográficos</title>
+
+	<para xml:lang="es">Existe la posibilidad de añadir los siguientes componentes geográficos al mapa: </para>
+
+	<variablelist>
+	    <varlistentry>
+	        <term xml:lang="es">
+                    <command><link 
+                        linkend="componente-coordenadas">Coordenadas</link>
+                    </command>
+                </term>
+	        <listitem>
+	          <para xml:lang="es">Muestra las coordenadas reales en las que se encuentra el puntero de ratón sobre el mapa.</para>
+	        </listitem>
+            </varlistentry>
+	    <varlistentry>
+	        <term xml:lang="es">
+                    <command><link 
+                        linkend="componente-escala">Escala</link>
+                    </command>
+                </term>
+	        <listitem>
+	          <para xml:lang="es">Muestra la escala en la que se encuentra la vista actual del mapa.</para>
+	        </listitem>
+            </varlistentry>
+            <varlistentry>
+	             <term xml:lang="es">
+                    <command><link 
+                        linkend="herramienta-geolocalizacion">Herramienta Geolocalización</link>
+                    </command>
+                </term>
+	             <listitem>
+	               <para xml:lang="es">Herramienta que permite la localización de ubicaciones a partir del texto introducido en un campo.</para>
+	             </listitem>
+            </varlistentry>
+              <varlistentry>
+              <term xml:lang="es">
+              <command><link linkend="herramienta-control-de-opacidad">Control de opacidad de capas</link></command>
+              </term>
+              <listitem>
+                <para xml:lang="es">Herramienta que permite aumentar o disminuir la opacidad de las capas del mapa.</para>
+              </listitem>
+            </varlistentry>
+        </variablelist>
+
+        <section xml:id="componente-coordenadas">
+            <title xml:lang="es">Coordenadas</title>
+     	    
+            <para xml:lang="es">Para añadir el componente coordenadas hay que acceder a la vista <filename>show.jspx</filename> del mapa e incluir el <emphasis>tagx</emphasis> <filename>coordinates</filename> dentro del <emphasis>tagx</emphasis> <filename>components</filename> que sirve como contenedor de componentes geográficos, el cual, se debe de incluir dentro del mapa en caso de que no se encuentre ya establecido dentro del mismo.</para>
+
+	    <para xml:lang="es"> Ejemplo:</para>
+            <programlisting>
+&lt;geo:components id=&quot;ps_com_springsource_petclinic_web_Map_components&quot;&gt;
+    &lt;components:coordinates id=&quot;ps_com_springsource_petclinic_web_Map_coordinates&quot;/&gt;
+&lt;/geo:components&gt;                        
+            </programlisting> 
+
+            <para xml:lang="es">Este componente dispone de diversas opciones. Para más información, revisar los parámetros que contiene el <emphasis>tagx</emphasis>.
+	    </para>
+	   </section>
+
+        <section xml:id="componente-escala">
+            <title xml:lang="es">Escala</title>
+     	    
+            <para xml:lang="es">Para añadir el componente escala hay que acceder a la vista <filename>show.jspx</filename> del mapa e incluir el <emphasis>tagx</emphasis> <filename>scale</filename> dentro del <emphasis>tagx</emphasis> <filename>components</filename> que sirve como contenedor de componentes geográficos, el cual, se debe de incluir dentro del mapa en caso de que no se encuentre ya establecido dentro del mismo.</para>
+
+	    <para xml:lang="es"> Ejemplo:</para>
+            <programlisting>
+&lt;geo:components id=&quot;ps_com_springsource_petclinic_web_Map_components&quot;&gt;
+    &lt;components:scale id=&quot;ps_com_springsource_petclinic_web_Map_coordinates&quot;/&gt;
+&lt;/geo:components&gt;                        
+            </programlisting> 
+
+            <para xml:lang="es">Este componente dispone de diversas opciones. Para más información, revisar los parámetros que contiene el <emphasis>tagx</emphasis>.
+	    </para>
+   
+	     </section>
+
+        <section xml:id="herramienta-geolocalizacion">
+            <title xml:lang="es">Herramienta geolocalización</title>
+     	    
+             <para xml:lang="es">Para añadir la herramienta de geolocalización hay que acceder a la vista <filename>show.jspx</filename> del mapa e incluir el <emphasis>tagx</emphasis> <filename>geosearch</filename> dentro del <emphasis>tagx</emphasis> <filename>toolbar</filename> , el cual establece la barra de herramientas disponibles en el mapa y se debe de incluir dentro del mismo en caso de que no se encuentre ya establecido.</para>
+
+	    <para xml:lang="es"> Ejemplo:</para>
+            <programlisting>
+&lt;geo:toolbar id=&quot;ps_com_springsource_petclinic_web_Map_toolbar&quot; z=&quot;user-managed&quot;&gt;
+    &lt;tool:geosearch id=&quot;ps_com_springsource_petclinic_web_Map_geosearch&quot;/&gt;
+&lt;/geo:toolbar&gt;                        
+            </programlisting> 
+
+            <para xml:lang="es">Este componente dispone de diversas opciones. Para más información, revisar los parámetros que contiene el <emphasis>tagx</emphasis>.
+            </para>
+	     </section>
+
+       <section xml:id="herramienta-control-de-opacidad">
+          <title xml:lang="es">Control de opacidad de capas</title>
+
+          <para xml:lang="es">Para añadir el deslizador de control de opacidad de las capas, hay que aceder a la vista <filename>show.jspx</filename> del mapa e incluir el <emphasis>tagx</emphasis> de la barra de herramientas <filename>toc-toolbar</filename>, donde se añadirá
+          el <emphasis>tagx</emphasis> la herramienta <filename>tool-opacity</filename></para>
+
+          <para xml:lang="es"> Ejemplo: </para>
+            <programlisting>
+&lt;geo:toc id=&quot;ps_com_springsource_petclinic_web_Map_toc&quot; z=&quot;YpKTYjQzut/zC96UI52ho3hliRk=&quot;&gt;
+  &lt;geo:toc-toolbar id=&quot;ps_com_springsource_petclinic_web_Map_toc_toolbar&quot; z=&quot;user-managed&quot;&gt;
+    &lt;tool:opacity id=&quot;opacity_slider&quot; z=&quot;user-managed&quot;/&gt;
+  &lt;/geo:toc-toolbar&gt;
+            </programlisting>
+      </section>
+    </section>
+
+    <section xml:id="ordenacion-de-capas">
+      <title xml:lang="es">Desactivar/activar ordenación de capas</title>
+
+        <para xml:lang="es">En caso de que no se requiere de un orden modificable en las capas de un mapa, es posible desactivar
+          la característica de "Arrastrar y soltar" las capas en un TOC, modificando en valor de la propiedad <emphasis>allowDragAndDrop</emphasis>
+          en el <emphasis>tagx</emphasis> <filename>map</filename> que se encuentra en el fichero <filename>show.jspx</filename> del mapa. </para>
+
+          <para xml:lang="es"> Ejemplo:</para>
+          <programlisting>
+&lt;geo:map id=&quot;ps_com_springsource_petclinic_web_Mapview&quot; allowDragAndDrop=&quot;false&quot; 
+projection=&quot;EPSG3857&quot; z=&quot;j4vEuc4wCAAADPl/fMnOqWSG358=&quot;
+...
+          </programlisting>
+        </section>
+
+        <section xml:id="mostrar-filtrado-entidades">
+          <title xml:lang="es">Mostrar filtrado de entidades</title>
+          
+          <para xml:lang="es">Es posible configurar la forma en la que se muestra la característica de filtrado de entidades
+         mediante el componente <link linked="addon-web-mvc-datatables">Datatable</link>. En la propiedad <emphasis>showFilterOn</emphasis>
+         incluída en <emphasis>tagx</emphasis> <filename>entity</filename> se puede seleccionar entre mostrar esta característica en una nueva ventana del navegador o sobre un diálogo en la misma ventana del mapa.
+         Por defecto, todas las entidades se mostrarán en un dialogo que aparecerá dentro del propio mapa. Para gestionar como se muestra esta característica en el proyecto mediante una función Javascript personalizada, hay que definir esta propiedad como <emphasis>custom</emphasis> y el nombre de la función del usuario a la propiedad <emphasis>showFilterFunction</emphasis>.
+         Todos estos parámetros se han de añadir al <emphasis>tagx</emphasis> <filename>entity</filename> incluido en el fichero
+          <filename>show.jspx</filename> del mapa.</para>
+
+         <para xml:lang="es"> Ejemplo:</para>
+       <programlisting>
+&lt;layer:entity id=&quot;l_com_springsource_petclinic_domain_Owner&quot; showFilterOn=&quot;custom&quot;
+showFilterFunction=&quot;fnFilterEntities&quot; selection=&quot;true&quot; path=&quot;/owners&quot; 
+pk&quot;id&quot; z&quot;nWPaEnqhLlf4IK4LpCT/Sovgspk=&quot;>      
+       </programlisting>
+
+        </section>
+
+    <section>
+        <title xml:lang="es">Personalizar capas generadas</title>
+	
+  	<para xml:lang="es">Los comandos mencionados en los puntos anteriores utilizan una serie de <emphasis>tagx</emphasis> para incluir los elementos definidos (capas, geometrías, etc) en las respectivas <emphasis>jspx</emphasis>. Dichos <emphasis>tagx</emphasis> contienen una serie de parámetros no especificados como parámetros de comando, los cuales pueden ser útiles para la personalización de los elementos, por ejemplo <emphasis>minZoom</emphasis>, que permite establecer el mínimo zoom a alcanzar en el caso del <emphasis>tagx</emphasis> correspondiente a una capa base (<emphasis>tile</emphasis>). Para obtener más información sobre estos parámetros consultar los ficheros <emphasis>tagx</emphasis> donde estos parámetros incluyen una descripción en su definición. Estos ficheros se encuentran dentro de la carpeta del proyecto <emphasis>WEB-INF/tags/geo/</emphasis> </para>
+
+      <section>
+          <title xml:lang="es">Añadir etiquetas a capas</title>
+        <para xml:lang="es">Para añadir un título a una etiqueta personalizada a una etiqueta del mapa, hay que acceder a la vista <filename>show.jspx</filename> del mapa e incluir dentro del <emphasis>tagx</emphasis> de la capa la propiedad <emphasis>labelingText</emphasis> con el texto deseado como valor de ésta. </para>
+
+          <para xml:lang="es"> Ejemplo:</para>
+        <programlisting>
+ &lt;layer:entity-field id=&quot;l_com_springsource_petclinic_domain_Owner_distance&quot;
+ labelingText=&quot;Distance&quot;&gt;
+        </programlisting>
+    </section>
+    <section>
+      <title xml:lang="es">Personalizar título de capa</title>
+        <para xml:lang="es">Para personalizar el titulo en formato HTML con el que una capa se mostrará en el TOC, se ha de añadir en el
+        fichero <filename>show.jspx</filename> del mapa, un <emphasis>tagx</emphasis> <filename>title</filename> dentro del de la capa a modificar, incluyéndole el texto HTML que se quiera mostrar.</para>
+
+        <para xml:lang="es"> Ejemplo:</para>
+        <programlisting>
+  &lt;layer-toc-title&gt;
+    &lt;span&gt;&lt;b&gt; :: Pet Area :: &lt;/b&gt;&lt;/span&gt;
+  &lt;/layer-toc-title&gt; 
+        </programlisting>
+    
+      </section>
+      <section>
+          <title xml:lang="es">Herramientas de capa</title>
+
+          <para xml:lang="es">Existe la posibildad de añadir herramientas a las distintas capas de un mapa</para>
+
+          <para xml:lang="es">Para añadir herramientas a las capas de un mapa hay que acceder a la vista <filename>show.jspx</filename> del mapa e incluir el <emphasis>tagx</emphasis> de la herramienta a añadir dentro del <emphasis>tagx</emphasis> <filename>tools</filename> el cual establece las diferentes herramientas de las que dispondrá una capa y se debe de incluir dentro del mismo en caso de que no se encuentre ya establecido.</para>
+
+          <para xml:lang="es"> Ejemplo:</para>
+            <programlisting>
+&lt;layer-toc:tools&gt;
+    &lt;layer-tool:zoom-select id=&quot;owner-location-zoom-select&quot;/&gt;
+&lt;/layer-toc:tools&gt;                        
+            </programlisting> 
+       </section>
+     </section>
+</chapter>
+

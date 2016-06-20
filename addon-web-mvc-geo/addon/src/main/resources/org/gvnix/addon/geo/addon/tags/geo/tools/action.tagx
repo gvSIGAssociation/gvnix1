@@ -1,0 +1,26 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:util="urn:jsptagdir:/WEB-INF/tags/jquery/util" xmlns:form="http://www.springframework.org/tags/form" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+  <jsp:output omit-xml-declaration="yes" />
+
+  <jsp:directive.attribute name="id" type="java.lang.String" required="true" description="Id to identify the tool element" />
+  <jsp:directive.attribute name="icon" type="java.lang.String" required="true" description="Icon to show on ToolBar to identiy the tool element" />
+  <jsp:directive.attribute name="iconLibrary" type="java.lang.String" required="false" rtexprvalue="true" description="DESC: Select de icon library.| DEFAULT: 'glyphicon' | POSSIBLE VALUES: 'fa' for font-awesome or 'glyphicon' for bootstrap 3" />
+  <jsp:directive.attribute name="actionFunction" type="java.lang.String" required="true" rtexprvalue="true" description="Function to invoke when the user press on tool button" />
+  <jsp:directive.attribute name="codeTooltip" type="java.lang.String" required="false" description="Code of i18n message to show like tooltip" />
+  <jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)" />
+  
+  
+    <c:if test="${empty iconLibrary}">
+    	<c:set var="iconLibrary" value="glyphicon" />
+    </c:if>
+
+    <c:if test="${not empty codeTooltip}">
+      <spring:message code="${codeTooltip}" var="tooltip"/>
+    </c:if>
+
+  	<!-- Generating info tool -->
+	<i id="${id}" class="${iconLibrary} ${icon} toolbar_button" 
+        data-type="simple_action"
+        data-fn_action="${actionFunction}"
+        title="${tooltip}">&amp;nbsp;</i>
+
+</jsp:root>

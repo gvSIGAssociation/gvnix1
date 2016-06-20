@@ -1,0 +1,65 @@
+/**
+ * 
+ */
+package __CONTROLLER_PACKAGE__;
+
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
+import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
+import __ENTITY_LEVEL_PACKAGE__.User;
+
+
+/**
+ * @author rohit
+ * 
+ */
+@Service("signupValidator")
+public class SignUpValidator {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#supports(java.lang.Class)
+	 */
+	public boolean supports(Class<?> clazz) {
+		return UserRegistrationForm.class.equals(clazz);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.validation.Validator#validate(java.lang.Object,
+	 * org.springframework.validation.Errors)
+	 */
+	public void validate(Object target, Errors errors) {
+		UserRegistrationForm form = (UserRegistrationForm) target;
+
+		String newPassword = form.getPassword();
+		String newPasswordAgain = form.getRepeatPassword();
+		if (!newPassword.equals(newPasswordAgain)) {
+			errors.reject("changepassword.passwordsnomatch");
+		}
+
+    int usersSameEmail = User.findUsersByEmailAddress(form.getEmailAddress()).getResultList().size();
+    if(usersSameEmail > 0){
+      errors.reject("changepassword.duplicateemailaddress");
+    }
+		
+		ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPrivateKey("6LdfmL8SAAAAAHKPqUQV5SxrRX9Id6a8cQo-mgpE");
+
+        String challenge = form.getRecaptcha_challenge_field();
+        String uresponse = form.getRecaptcha_response_field();
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer("localhost", challenge, uresponse);
+        if (!reCaptchaResponse.isValid()) {
+        	errors.reject("recaptcha.mismatch");
+        }
+
+
+	}
+
+}
